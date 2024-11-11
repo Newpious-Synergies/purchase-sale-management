@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Dynamic Product Table</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+     <link rel="icon" sizes="1512x1512" href="https://newpious.com/wp-content/uploads/2023/04/logo_211__1_-removebg-preview-1.png" type="image/x-icon">
+    <title>Newpious Synergies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #4a4a4a;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="datetime-local"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="datetime-local"]:focus {
+            border-color: #5cb85c;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #5cb85c;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            display: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #5cb85c;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            input[type="text"],
+            input[type="number"],
+            input[type="datetime-local"],
+            button {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Product Purchase Table</h2>
+
+    <div class="input-container">
+        <label for="quantity">Enter Quantity:</label>
+        <input type="number" id="quantity" min="1" required>
+    </div>
+    <div class="input-container">
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" required>
+    </div>
+    <div class="input-container">
+        <label for="productVersion">Product Version:</label>
+        <input type="text" id="productVersion" required>
+    </div>
+    <div class="input-container">
+        <label for="date">Date and Time:</label>
+        <input type="datetime-local" id="date" required>
+    </div>
+    <div class="input-container">
+        <label for="verifiedBy">Verified By:</label>
+        <input type="text" id="verifiedBy" required>
+    </div>
+
+    <button onclick="createRows()">Create Rows</button>
+
+    <table id="productTable">
+        <thead>
+            <tr>
+                <th>Purchase</th>
+                <th>Verified By</th>
+                <th>Product Name</th>
+                <th>Product Version</th>
+                <th>Date</th>
+                <th>Serial Number</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <button id="exportBtn" style="display: none;" onclick="exportToExcel()">Export to Excel</button>
+
+    <script>
+        function createRows() {
+            const quantity = document.getElementById("quantity").value;
+            const productName = document.getElementById("productName").value;
+            const productVersion = document.getElementById("productVersion").value;
+            const date = document.getElementById("date").value;
+            const verifiedBy = document.getElementById("verifiedBy").value;
+
+            const tableBody = document.getElementById("tableBody");
+            tableBody.innerHTML = ""; // Clear previous rows
+
+            for (let i = 0; i < quantity; i++) {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${i + 1}</td>
+                    <td>${verifiedBy}</td>
+                    <td>${productName}</td>
+                    <td>${productVersion}</td>
+                    <td>${date}</td>
+                    <td><input type="text" placeholder="Enter Serial Number" required></td>
+                    <td>1</td>
+                `;
+                tableBody.appendChild(row);
+            }
+
+            document.getElementById("productTable").style.display = "table";
+            document.getElementById("exportBtn").style.display = "block";
+        }
+
+        function exportToExcel() {
+            const table = document.getElementById("productTable");
+            const wb = XLSX.utils.book_new();
+            const wsData = [];
+
+            // Get headers
+            const headers = [];
+            table.querySelectorAll("th").forEach(th => headers.push(th.innerText));
+            wsData.push(headers);
+
+            // Get rows
+            const rows = table.querySelectorAll("tbody tr");
+            rows.forEach(row => {
+                const rowData = [];
+                row.querySelectorAll("td").forEach((td, index) => {
+                    if (index === 5) { // Serial Number input field
+                        const serialInput = td.querySelector("input");
+                        rowData.push(serialInput.value); // Get the value from the input
+                    } else {
+                        rowData.push(td.innerText); // Get the static cell value
+                    }
+                });
+                wsData.push(rowData);
+            });
+
+            const ws = XLSX.utils.aoa_to_sheet(wsData);
+            XLSX.utils.book_append_sheet(wb, ws, "Product Purchase");
+            XLSX.writeFile(wb, "ProductPurchase.xlsx");
+        }
+    </script>
+
+</body>
+
+</html>
