@@ -1,265 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-
-    <title>Dynamic Product Table</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-     <link rel="icon" sizes="1512x1512" href="https://newpious.com/wp-content/uploads/2023/04/logo_211__1_-removebg-preview-1.png" type="image/x-icon">
-    <title>Newpious Synergies</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
-
-        h2 {
-            text-align: center;
-            color: #6a0dad;
-        }
-
-        .input-container {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 15px;
-            width: 100%;
-        }
-
-        label {
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #6a0dad;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        input[type="datetime-local"] {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        input[type="text"]:focus,
-        input[type="number"]:focus,
-        input[type="datetime-local"]:focus {
-            border-color: #6a0dad;
-            outline: none;
-        }
-
-        button {
-            padding: 10px 15px;
-            background-color: #6a0dad;
-            border: none;
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background-color: #570a8e;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            display: none;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-            position: relative;
-        }
-
-        th {
-            background-color: #6a0dad;
-            color: white;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        .placeholder {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            color: #aaa;
-            pointer-events: none;
-        }
-
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-
-            h2 {
-                font-size: 24px;
-            }
-
-            input[type="text"],
-            input[type="number"],
-            input[type="datetime-local"],
-            button {
-                font-size: 14px;
-                padding: 8px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="sale.css">
 </head>
-
 <body>
-    <h2>Product Sale Table</h2>
-    <div class="input-container">
-        <label for="saleTo">Sale To:</label>
-        <input type="text" id="saleTo" required>
-    </div>
-    <div class="input-container">
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" min="1" required>
-    </div>
-    <div class="input-container">
-        <label for="productName">Product Name:</label>
-        <input type="text" id="productName" required>
-    </div>
-    <div class="input-container">
-        <label for="Boxcheck">Box</label>
-        <input type="checkbox" id="Boccheck" required>
-    </div>
-    <div class="input-container">
-        <label for="productVersion">Product Version:</label>
-        <input type="text" id="productVersion" required>
-    </div>
-    <div class="input-container">
-        <label for="date">Date:</label>
-        <input type="datetime-local" id="date" required>
-    </div>
-    <div class="input-container">
-        <label for="verifiedBy">Verified By:</label>
-        <input type="text" id="verifiedBy" required>
-    </div>
 
-    <button onclick="createRows()">Create Rows</button>
+  <h1>Product Sale Form</h1>
+  <form name="submit-to-google-sheet">
+<label>Sale To</label> 
+<input type="text" name="Sale To"> 
+<label>Quantity</label> 
+<input type="number" name="Quantity"> 
 
-    <table id="productTable">
-        <thead>
-            <tr>
-                <th>Sale To</th>
-                <th>Product Name</th>
-                <th>Product Version</th>
-                <th>Date</th>
-                <th>Serial Number</th>
-                <th>Quantity</th>
-                <th>Verified By</th>
-            </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-    </table>
+<label for="UNIT">Unit</label>
+<select name="measurement_units">
+  <option value="nos">Number (nos)</option>
+  <option value="kg">Kilograms (kg)</option>
+  <option value="meter">Meters (m)</option>
+  <option value="kw">Kilowatts (kW)</option>
+  <option value="kv">Kilovolts (kV)</option>
+  <option value="liter">Liters (L)</option>
+  <option value="watt">Watts (W)</option>
+  <option value="volt">Volts (V)</option>
+  <option value="ampere">Amperes (A)</option>
+  <option value="ohm">Ohms (Ω)</option>
+  <option value="joule">Joules (J)</option>
+  <option value="coulomb">Coulombs (C)</option>
+  <option value="farad">Farads (F)</option>
+  <option value="newton">Newtons (N)</option>
+  <option value="hertz">Hertz (Hz)</option>
+  <option value="celsius">Celsius (°C)</option>
+  <option value="kelvin">Kelvin (K)</option>
+  <option value="bar">Bar (bar)</option>
+  <option value="atm">Atmospheres (atm)</option>
+  <option value="pascal">Pascals (Pa)</option>
+  <option value="milliampere">Milliamperes (mA)</option>
+  <option value="megawatt">Megawatts (MW)</option>
+  <option value="megavolt">Megavolts (MV)</option>
+  <option value="kilogram_meter">Kilogram-meter (kg·m)</option>
+  <option value="liter_per_second">Liters per second (L/s)</option>
+</select>
 
-    <button id="exportBtn" style="display: none;" onclick="exportToExcel()">Export to Excel</button>
 
-    <script>
-        function createRows() {
-            const saleTo = document.getElementById("saleTo").value;
-            const quantity = document.getElementById("quantity").value;
-            const productName = document.getElementById("productName").value;
-            const productVersion = document.getElementById("productVersion").value;
-            const date = document.getElementById("date").value;
-            const verifiedBy = document.getElementById("verifiedBy").value;
 
-            const tableBody = document.getElementById("tableBody");
-            tableBody.innerHTML = ""; // Clear previous rows
 
-            for (let i = 0; i < quantity; i++) {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${saleTo}</td>
-                    <td>${productName}</td>
-                    <td>${productVersion}</td>
-                    <td>${date}</td>
-                    <td contenteditable="true" onfocus="removePlaceholder(this)" onblur="addPlaceholder(this)" oninput="checkEmpty(this)">
-                        <div class="placeholder">Enter Serial Number</div>
-                    </td>
-                    <td>${1}</td>
-                    <td>${verifiedBy}</td>
-                `;
-                tableBody.appendChild(row);
-            }
 
-            document.getElementById("productTable").style.display = "table";
-            document.getElementById("exportBtn").style.display = "block";
-        }
 
-        function removePlaceholder(cell) {
-            const placeholder = cell.querySelector(".placeholder");
-            if (placeholder) {
-                placeholder.style.display = "none";
-            }
-        }
+<div class="subboundry">
+<h2>Product Detail</h2>
 
-        function addPlaceholder(cell) {
-            const placeholder = cell.querySelector(".placeholder");
-            if (cell.innerText.trim() === "") {
-                placeholder.style.display = "block";
-            }
-        }
+<!-- First dropdown: Main category -->
+<label for="category">Select Category:</label>
+<select id="category" name="category" onchange="populateSubOptions()">
+    <option value="">--Select Category--</option>
+    <option value="VFD Models">VFD Models</option>
+    <option value="Credence Solar Panels">Credence Solar Panels</option>
+    <option value="Asani Models">Asani Models</option>
+    <option value="All Product Names">All Product Names</option>
+    <option value="Veichi Models">Veichi Models</option>
+</select>
 
-        function checkEmpty(cell) {
-            const placeholder = cell.querySelector(".placeholder");
-            if (cell.innerText.trim() !== "") {
-                placeholder.style.display = "none";
-            } else {
-                placeholder.style.display = "block";
-            }
-        }
+<!-- Second dropdown: Sub-options -->
+<label for="subcategory">Select Option:</label>
+<select id="subcategory"  name="product">
+    <option value="">--Select Option--</option>
+</select>
 
-        function exportToExcel() {
-            const table = document.getElementById("productTable");
-            const wb = XLSX.utils.book_new();
-            const wsData = [];
+<script>
+    // Data for dropdown options
+    const data = {
+        "VFD Models": [
+            { name: "CG Solar 3Hp VSR23-9P5", value: "CG_Solar_3Hp_VSR23-9P5" },
+            { name: "CG Solar 5Hp VSRE48-009", value: "CG_Solar_5Hp_VSRE48-009" },
+            { name: "CG Solar 7.5Hp VSR48-013", value: "CG_Solar_7.5Hp_VSR48-013" },
+            { name: "CG Solar 10Hp VSR48-017", value: "CG_Solar_10Hp_VSR48-017" },
+            { name: "CG Solar 15Hp VSR48-024", value: "CG_Solar_15Hp_VSR48-024" },
+            { name: "CG Solar 20Hp VSR48-032", value: "CG_Solar_20Hp_VSR48-032" },
+            { name: "CG Solar 25Hp VSR48-038", value: "CG_Solar_25Hp_VSR48-038" },
+            { name: "CG Solar 30Hp VSR48-045", value: "CG_Solar_30Hp_VSR48-045" },
+            { name: "CG Solar 40Hp VSR48-060", value: "CG_Solar_40Hp_VSR48-060" },
+            { name: "CG Solar 50Hp VSR48-075", value: "CG_Solar_50Hp_VSR48-075" },
+            { name: "CG Solar 75Hp VSR48-112", value: "CG_Solar_75Hp_VSR48-112" },
+            { name: "CG Solar 100Hp VSR48-150", value: "CG_Solar_100Hp_VSR48-150" },
+            { name: "CG Solar 150Hp VSR48-210", value: "CG_Solar_150Hp_VSR48-210" }
+        ],
+        "Credence Solar Panels": [
+            { name: "CS-QB685-132", value: "CS_QB685_132" },
+            { name: "CSQB670-132", value: "CSQB670_132" },
+            { name: "CS-QB725-132", value: "CS_QB725_132" }
+        ],
+        "Asani Models": [
+            { name: "ASB-M10-144-540", value: "ASB_M10_144_540" }
+        ],
+        "All Product Names": [
+            { name: "DCDB", value: "DCDB" },
+            { name: "ACDB", value: "ACDB" },
+            { name: "Net Meter", value: "Net_Meter" },
+            { name: "VFD Box", value: "VFD_Box" },
+            { name: "DC cable 4sqr mm", value: "DC_cable_4sqr_mm" },
+            { name: "DC cable 6sqr mm", value: "DC_cable_6sqr_mm" },
+            { name: "Lug 4Sqr mm", value: "Lug_4Sqr_mm" },
+            { name: "Lug 6Sqr mm", value: "Lug_6Sqr_mm" },
+            { name: "Lug 35 Sqr mm", value: "Lug_35_Sqr_mm" },
+            { name: "MC4 connector", value: "MC4_connector" },
+            { name: "Y connecter", value: "Y_connecter" },
+            { name: "DC MCB 500v", value: "DC_MCB_500v" },
+            { name: "DC MCB 800v", value: "DC_MCB_800v" },
+            { name: "DC MCB 125A", value: "DC_MCB_125A" },
+            { name: "AC Cable 4Sqr mm", value: "AC_Cable_4Sqr_mm" },
+            { name: "AC Cable 2c X 4Sqr mm", value: "AC_Cable_2c_X_4Sqr_mm" },
+            { name: "Traminals", value: "Traminals" },
+            { name: "Tai cables", value: "Tai_cables" },
+            { name: "RMS", value: "RMS" },
+            { name: "Earthing Rods", value: "Earthing_Rods" },
+            { name: "L.A Latu", value: "L_A_Latu" },
+            { name: "Hardwere", value: "Hardwere" },
+            { name: "Perlin", value: "Perlin" },
+            { name: "Rafter", value: "Rafter" },
+            { name: "U clamp", value: "U_clamp" },
+            { name: "Z clamp", value: "Z_clamp" },
+            { name: "VSR11-9P5", value: "VSR11-9P5" },
+        ],
+        "Veichi Models": [
+            { name: "Veichi 3Hp SD700-6ROD", value: "Veichi_3Hp_SD700_6ROD" },
+            { name: "Veichi 5Hp AG300-T/S2-004G", value: "Veichi_5Hp_AG300_T_S2_004G" },
+            { name: "Veichi AG300-T3-011G/015P", value: "Veichi_AG300_T3_011G_015P" },
+            { name: "Veichi AG300-T3-018G/022P", value: "Veichi_AG300_T3_018G_022P" }
+        ]
+    };
 
-            // Get headers
-            const headers = [];
-            table.querySelectorAll("th").forEach(th => headers.push(th.innerText));
-            wsData.push(headers);
+    // Function to populate the second dropdown based on the first dropdown selection
+    function populateSubOptions() {
+        const category = document.getElementById("category").value;
+        const subcategoryDropdown = document.getElementById("subcategory");
 
-            // Get rows
-            const rows = table.querySelectorAll("tbody tr");
-            rows.forEach(row => {
-                const rowData = [];
-                row.querySelectorAll("td").forEach((td, index) => {
-                    // If the cell is contenteditable for Serial Number, get its value
-                    if (index === 4) {
-                        rowData.push(td.innerText.trim()); // Get the serial number value
-                    } else {
-                        rowData.push(td.innerText.trim()); // Get the static cell value
-                    }
-                });
-                wsData.push(rowData);
+        // Clear previous options
+        subcategoryDropdown.innerHTML = '<option value="">--Select Option--</option>';
+
+        // Populate new options
+        if (category && data[category]) {
+            data[category].forEach(option => {
+                const newOption = document.createElement("option");
+                newOption.value = option.value; // Unique value for Excel usage
+                newOption.textContent = option.name;
+                subcategoryDropdown.appendChild(newOption);
             });
-
-            const ws = XLSX.utils.aoa_to_sheet(wsData);
-            XLSX.utils.book_append_sheet(wb, ws, "Product Purchase");
-            XLSX.writeFile(wb, "ProductPurchase.xlsx");
         }
-    </script>
+    }
+</script>
+
+<label for="box-type">Box Detail</label>
+<select id="box-type" name="box_type">
+    <option value="with_box">With Box</option>
+    <option value="without_box">Without Box</option>
+</select>
+</div>
+
+<!-- Date -->
+<div class="form-group">
+<label for="date">Date</label>
+<input type="date" id="date" name="date" required>
+</div>
+<!-- Verified By -->
+<div class="form-group">
+<label for="verified-by">Verified By</label>
+<input type="text" id="verified-by" name="verified_by" placeholder="Enter verifier's name" required>
+</div>
+<input type="submit" value="submit">
+
+
+
+
+</form>
+
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzBHRXKfgvaZXBZHnWt6W5brUww_KGPriXAW3UH74HsXPefmw1RGk__oJkEXmzeSiQLqQ/exec'
+  const form = document.forms['submit-to-google-sheet']
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => console.log('Success!', response))
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
+<script src="formSubmit.js"></script>
 
 </body>
-
 </html>
