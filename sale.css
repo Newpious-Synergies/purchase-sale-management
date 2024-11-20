@@ -1,0 +1,150 @@
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f3fc;
+  color: #333;
+}
+
+/* Center the form within 70% width of the page */
+form {
+  max-width: 70%;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+}
+
+/* Form heading */
+h1 {
+  text-align: center;
+  color: #6a1b9a; /* Purple color */
+  font-size: 28px;
+  margin-top: 30px;
+}
+
+/* Form section heading */
+form h2 {
+  font-size: 22px;
+  color: #6a1b9a; /* Purple color */
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+  border-bottom: 3px solid #b39ddb;
+  display: inline-block;
+  padding: 5px 15px;
+}
+
+/* Form elements */
+form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #4a148c; /* Dark purple */
+}
+
+form input, form select, form button {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #b39ddb; /* Purple border */
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Dropdown styles */
+form select {
+  appearance: none;
+  background: #fff url('data:image/svg+xml;utf8,<svg fill="%236a1b9a" height="12" viewBox="0 0 20 20" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M0 0l10 10 10-10z"/></svg>') no-repeat right 10px center;
+  background-size: 12px;
+}
+
+/* Input fields focus effect */
+form input:focus, form select:focus {
+  border-color: #6a1b9a; /* Purple color */
+  outline: none;
+  box-shadow: 0 0 5px rgba(106, 27, 154, 0.5);
+}
+
+/* Button styles */
+form input[type="submit"] {
+  background-color: #6a1b9a;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+  background-color: #4a148c; /* Darker purple */
+}
+
+/* Product Detail section */
+.product-detail {
+  border: 1px solid #b39ddb;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+}
+
+/* Category and subcategory dropdown styles */
+form select#category, form select#subcategory {
+  width: 100%;
+}
+
+/* Label for the product detail section */
+.product-detail label {
+  font-size: 18px;
+  color: #4a148c;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  form {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  form label, form input, form select, form button {
+    font-size: 12px;
+  }
+
+  form h2 {
+    font-size: 20px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+}
+
+/* Responsive design for tablets and laptops */
+@media (min-width: 769px) and (max-width: 1200px) {
+  form {
+    max-width: 70%;
+  }
+}
+
+@media (min-width: 1201px) {
+  form {
+    max-width: 70%;
+  }
+}
+.subboundry{
+  border: solid rgb(108, 77, 232) 1px;
+  margin: 3px;
+  padding: 3px;
+  text-align: center;
+  background-color: #c9d1d4;
+}
+body{
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
