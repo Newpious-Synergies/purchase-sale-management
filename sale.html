@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
               successMessage.style.display = 'block'; // Show success message
               setTimeout(() => {
                   successMessage.style.display = 'none'; // Hide message after 5 seconds
-              }, 500); // 5 seconds timeout
+              }, 5000); // 5 seconds timeout
           })
           .catch(error => console.error('Error!', error.message));
   });
