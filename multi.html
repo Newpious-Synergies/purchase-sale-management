@@ -67,8 +67,8 @@
         <label for="quantity">Quantity:</label>
         <input type="number" id="quantity" placeholder="Enter quantity">
 
-      <label for="UNIT">Unit</label>
-<select name="measurement_units">
+     <label for="UNIT">Unit</label>
+<select id="measurement_units" name="measurement_units">
   <option value="nos">Number (nos)</option>
   <option value="kg">Kilograms (kg)</option>
   <option value="meter">Meters (m)</option>
@@ -224,43 +224,44 @@
     <button id="exportBtn" onclick="exportToExcel()">Export to Excel</button>
 
     <script>
-        function createRows() {
-            const saleTo = document.getElementById("saleTo").value;
-            const quantity = parseInt(document.getElementById("quantity").value, 10);
-            const unit = document.getElementById("measurement_units").value;
-            const category = document.getElementById("category").value;
-            const subcategory = document.getElementById("subcategory").value;
-            const date = document.getElementById("date").value;
-            const verifiedBy = document.getElementById("verifiedBy").value;
+       function createRows() {
+    const saleTo = document.getElementById("saleTo").value;
+    const quantity = parseInt(document.getElementById("quantity").value, 10);
+    const unit = document.getElementById("measurement_units").value;
+    const category = document.getElementById("category").value;
+    const subcategory = document.getElementById("subcategory").value;
+    const date = document.getElementById("date").value;
+    const verifiedBy = document.getElementById("verifiedBy").value;
 
-            if (!saleTo || !quantity || !unit || !category || !subcategory || !date || !verifiedBy) {
-                alert("Please fill in all fields.");
-                return;
-            }
+    if (!saleTo || !quantity || !unit || !category || !subcategory || !date || !verifiedBy) {
+        alert("Please fill in all fields.");
+        return;
+    }
 
-            const tableBody = document.getElementById("tableBody");
+    const tableBody = document.getElementById("tableBody");
 
-            for (let i = 0; i < quantity; i++) {
-                const row = tableBody.insertRow();
+    for (let i = 0; i < quantity; i++) {
+        const row = tableBody.insertRow();
 
-                row.innerHTML = `
-                    <td>${saleTo}</td>
-                    <td>${1}</td>
-                    <td>${unit}</td>
-                    <td>${category}</td>
-                    <td>${subcategory}</td>
-                    <td>
-                        <input type="text" placeholder="Enter Serial Number" onchange="updateCellValue(this)">
-                    </td>
-                    <td style="color:red;">Not Applicable</td>
-                    <td>${date}</td>
-                    <td>${verifiedBy}</td>
-                `;
-            }
+        row.innerHTML = `
+            <td>${saleTo}</td>
+            <td>${1}</td>
+            <td>${unit}</td>
+            <td>${category}</td>
+            <td>${subcategory}</td>
+            <td>
+                <input type="text" placeholder="Enter Serial Number" onchange="updateCellValue(this)">
+            </td>
+            <td style="color:red;">Not Applicable</td>
+            <td>${date}</td>
+            <td>${verifiedBy}</td>
+        `;
+    }
 
-            document.getElementById("productTable").style.display = "table";
-            document.getElementById("exportBtn").style.display = "block";
-        }
+    document.getElementById("productTable").style.display = "table";
+    document.getElementById("exportBtn").style.display = "block";
+}
+
 
         function updateCellValue(input) {
             const cell = input.parentElement;
