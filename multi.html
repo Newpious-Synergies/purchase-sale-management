@@ -203,33 +203,6 @@
     <button id="exportBtn" onclick="exportToExcel()">Export to Excel</button>
 
     <script>
-        // Define subcategories for each category
-        const subcategories = {
-            "Electronics": ["Mobile", "Laptop", "TV", "Headphones"],
-            "Groceries": ["Fruits", "Vegetables", "Dairy", "Snacks"],
-            "Clothing": ["Men's Wear", "Women's Wear", "Kids' Wear", "Accessories"],
-            "Furniture": ["Tables", "Chairs", "Beds", "Sofas"]
-        };
-
-        function updateSubcategory() {
-            const category = document.getElementById("category").value;
-            const subcategorySelect = document.getElementById("subcategory");
-
-            // Clear existing subcategories
-            subcategorySelect.innerHTML = "";
-
-            // Add new subcategories
-            subcategories[category].forEach(subcategory => {
-                const option = document.createElement("option");
-                option.value = subcategory;
-                option.textContent = subcategory;
-                subcategorySelect.appendChild(option);
-            });
-        }
-
-        // Initialize subcategory options on page load
-        document.addEventListener("DOMContentLoaded", updateSubcategory);
-
         function createRows() {
             const saleTo = document.getElementById("saleTo").value;
             const quantity = parseInt(document.getElementById("quantity").value, 10);
@@ -246,7 +219,6 @@
 
             const tableBody = document.getElementById("tableBody");
 
-            // Add rows equal to quantity
             for (let i = 0; i < quantity; i++) {
                 const row = tableBody.insertRow();
 
@@ -256,7 +228,9 @@
                     <td>${unit}</td>
                     <td>${category}</td>
                     <td>${subcategory}</td>
-                    <td><input type="text" placeholder="Enter Serial Number"></td>
+                    <td>
+                        <input type="text" placeholder="Enter Serial Number" onchange="updateCellValue(this)">
+                    </td>
                     <td style="color:red;">Not Applicable</td>
                     <td>${date}</td>
                     <td>${verifiedBy}</td>
@@ -265,16 +239,11 @@
 
             document.getElementById("productTable").style.display = "table";
             document.getElementById("exportBtn").style.display = "block";
+        }
 
-            // Clear input fields
-            document.getElementById("saleTo").value = "";
-            document.getElementById("quantity").value = "";
-            document.getElementById("measurement_units").value = "Kg";
-            document.getElementById("category").value = "Electronics";
-            document.getElementById("date").value = "";
-            document.getElementById("verifiedBy").value = "";
-
-            updateSubcategory(); // Reset subcategories
+        function updateCellValue(input) {
+            const cell = input.parentElement;
+            cell.textContent = input.value; // Replace input field with its value
         }
 
         function exportToExcel() {
@@ -282,6 +251,6 @@
             const workbook = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
             XLSX.writeFile(workbook, "Product_Sales.xlsx");
         }
-    </script>
-</body>
+  </script>
+  </body>
 </html>
