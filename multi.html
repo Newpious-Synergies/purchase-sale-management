@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+
+<!--     <title>Dynamic Product Table</title> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+     <link rel="icon" sizes="1512x1512" href="https://newpious.com/wp-content/uploads/2023/04/logo_211__1_-removebg-preview-1.png" type="image/x-icon">
+    <title>Newpious Synergies Multi Sale</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #6a0dad;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #6a0dad;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="datetime-local"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="datetime-local"]:focus {
+            border-color: #6a0dad;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #6a0dad;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #570a8e;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            display: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            position: relative;
+        }
+
+        th {
+            background-color: #6a0dad;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .placeholder {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #aaa;
+            pointer-events: none;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            input[type="text"],
+            input[type="number"],
+            input[type="datetime-local"],
+            button {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Product Sale Table</h2>
+    <div class="input-container">
+        <label for="saleTo">Sale To:</label>
+        <input type="text" id="saleTo" required>
+    </div>
+    <div class="input-container">
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" min="1" required>
+    </div>
+    <div class="input-container">
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" required>
+    </div>
+    <div class="input-container">
+        <label for="productVersion">Product Version:</label>
+        <input type="text" id="productVersion" required>
+    </div>
+    <div class="input-container">
+        <label for="date">Date:</label>
+        <input type="datetime-local" id="date" required>
+    </div>
+    <div class="input-container">
+        <label for="verifiedBy">Verified By:</label>
+        <input type="text" id="verifiedBy" required>
+    </div>
+
+    <button onclick="createRows()">Create Rows</button>
+
+    <table id="productTable">
+        <thead>
+            <tr>
+                <th>Sale To</th>
+                <th>Product Name</th>
+                <th>Product Version</th>
+                <th>Date</th>
+                <th>Serial Number</th>
+                <th>Quantity</th>
+                <th>Verified By</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <button id="exportBtn" style="display: none;" onclick="exportToExcel()">Export to Excel</button>
+
+    <script>
+        function createRows() {
+            const saleTo = document.getElementById("saleTo").value;
+            const quantity = document.getElementById("quantity").value;
+            const productName = document.getElementById("productName").value;
+            const productVersion = document.getElementById("productVersion").value;
+            const date = document.getElementById("date").value;
+            const verifiedBy = document.getElementById("verifiedBy").value;
+
+            const tableBody = document.getElementById("tableBody");
+            tableBody.innerHTML = ""; // Clear previous rows
+
+            for (let i = 0; i < quantity; i++) {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${saleTo}</td>
+                    <td>${productName}</td>
+                    <td>${productVersion}</td>
+                    <td>${date}</td>
+                    <td contenteditable="true" onfocus="removePlaceholder(this)" onblur="addPlaceholder(this)" oninput="checkEmpty(this)">
+                        <div class="placeholder">Enter Serial Number</div>
+                    </td>
+                    <td>${1}</td>
+                    <td>${verifiedBy}</td>
+                `;
+                tableBody.appendChild(row);
+            }
+
+            document.getElementById("productTable").style.display = "table";
+            document.getElementById("exportBtn").style.display = "block";
+        }
+
+        function removePlaceholder(cell) {
+            const placeholder = cell.querySelector(".placeholder");
+            if (placeholder) {
+                placeholder.style.display = "none";
+            }
+        }
+
+        function addPlaceholder(cell) {
+            const placeholder = cell.querySelector(".placeholder");
+            if (cell.innerText.trim() === "") {
+                placeholder.style.display = "block";
+            }
+        }
+
+        function checkEmpty(cell) {
+            const placeholder = cell.querySelector(".placeholder");
+            if (cell.innerText.trim() !== "") {
+                placeholder.style.display = "none";
+            } else {
+                placeholder.style.display = "block";
+            }
+        }
+
+        function exportToExcel() {
+            const table = document.getElementById("productTable");
+            const wb = XLSX.utils.book_new();
+            const wsData = [];
+
+            // Get headers
+            const headers = [];
+            table.querySelectorAll("th").forEach(th => headers.push(th.innerText));
+            wsData.push(headers);
+
+            // Get rows
+            const rows = table.querySelectorAll("tbody tr");
+            rows.forEach(row => {
+                const rowData = [];
+                row.querySelectorAll("td").forEach((td, index) => {
+                    // If the cell is contenteditable for Serial Number, get its value
+                    if (index === 4) {
+                        rowData.push(td.innerText.trim()); // Get the serial number value
+                    } else {
+                        rowData.push(td.innerText.trim()); // Get the static cell value
+                    }
+                });
+                wsData.push(rowData);
+            });
+
+            const ws = XLSX.utils.aoa_to_sheet(wsData);
+            XLSX.utils.book_append_sheet(wb, ws, "Product Purchase");
+            XLSX.writeFile(wb, "ProductPurchase.xlsx");
+        }
+    </script>
+
+</body>
+
+</html>
